@@ -1,0 +1,31 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "Purchase";
+}
+
+<div class="wrapper">
+    <div class="checkout container">
+        <form id="payment-form" method="post" asp-controller="Checkout" asp-action="CreateStripe">
+            @Html.HiddenFor(n => n.Id)
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" name="Title" asp-for="@Model.Title">@Model.Title</h5>
+                    <p class="card-text">@Model.Description</p>
+                    <p class="card-text"><small class="text-muted">Author: @Model.Author</small></p>
+                    <p class="card-text"><small class="text-muted">Price: @Model.Price</small></p>
+                </div>
+                <img style="width: 90%" class="card-img-bottom" src="@Model.Thumbnail" alt="Card image cap">
+            </div>
+            <hr />
+            <script src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-key="pk_test_TPzXfL8qakSMXlHsWV4TDsSs"
+                    data-name="Payment Gateway"
+                    data-description="@Model.Author - @Model.Title"
+                    data-locale="en"
+                    data-label="Confirm Payment - $@ViewBag.PurchaseAmount">
+            </script>
+        </form>
+    </div>
+</div>
